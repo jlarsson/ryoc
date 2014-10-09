@@ -2,13 +2,15 @@
 
 # ryoc
 
+```$ npm install ryoc```
+
 Simple nonintrusive javascript prototypical inheritance through fluent api.
 
 Works in node. No guarantees for other environments. 
 
 ##Quick syntax
 ```javascript
-var klass = ryoc()
+var klass = require('ryoc')()
     .inherit([Object|Function])
     .construct([Function])
     .method([name],[Function])
