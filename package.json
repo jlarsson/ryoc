@@ -1,15 +1,21 @@
 {
-  "name": "ryoc",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha test/*.js"
-  },
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "should": "~4.0.4",
-    "mocha": "~1.21.4"
-  }
+    "name": "ryoc",
+    "version": "0.0.0",
+    "author": "Joakim Larsson",
+    "license": "MIT",
+    "description": "Simple nonintrusive javascript prototypical inheritance through fluent api",
+    "keywords": ["inheritance", "class", "javascript", "prototype", "prototypical inheritance"],
+    "homepage": "https://github.com/jlarsson/ryoc",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/jlarsson/ryoc.git"
+    },
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha test/*.js"
+    },
+    "devDependencies": {
+        "should": "~4.0.4",
+        "mocha": "~1.21.4"
+    }
 }
