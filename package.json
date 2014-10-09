@@ -1,6 +1,6 @@
 {
     "name": "ryoc",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "author": "Joakim Larsson",
     "license": "MIT",
     "description": "Simple nonintrusive javascript prototypical inheritance through fluent api",
@@ -11,6 +11,7 @@
         "url": "git://github.com/jlarsson/ryoc.git"
     },
     "main": "index.js",
+    "files": ["index.js", "ryoc.js","LICENSE.md","README.md"],
     "scripts": {
         "test": "mocha test/*.js"
     },
