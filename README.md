@@ -23,6 +23,13 @@ var instance = new klass([constructor arguments]);
 var other = klass([constructor arguments]);
 ```
 
+Order of application in ```toClass()```:
+
+1. ```mixin()```
+1. ```method()```
+1. ```property()``` / ```getter()``` / ```setter()``` merged by name
+1. ```construct()```
+
 ##Annotated sample code
 
 ```javascript

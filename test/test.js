@@ -144,6 +144,81 @@ describe("ryoc", function () {
 
 });
 
+describe('ryoc().mixin()', function () {
+    function testMixin(klass) {
+        var instance = klass();
+        assert(instance);
+        assert(instance.bar, 'baz');
+        assert(instance.foo);
+        assert(instance.foo(), 'baz');
+
+        instance.bar = 'buzz';
+        assert(instance.foo(), 'buzz');
+    }
+
+    it('mixes in simple object', function () {
+        testMixin(ryoc()
+            .mixin({
+                bar: 'baz',
+                foo: function () {
+                    return this.bar;
+                }
+            })
+            .toClass());
+    });
+    it('mixes in array of objects', function () {
+        testMixin(ryoc()
+            .mixin([
+                {
+                    bar: 'baz'
+                },
+                {
+                    foo: function () {
+                        return this.bar;
+                    }
+                }
+                           ])
+            .toClass());
+    });
+    it('mixes in variable number of objects', function () {
+        testMixin(ryoc()
+            .mixin({
+                bar: 'baz'
+            }, {
+                foo: function () {
+                    return this.bar;
+                }
+            })
+            .toClass());
+    });
+    it('accumulates mixins', function () {
+        testMixin(ryoc()
+            .mixin({
+                bar: 'baz'
+            })
+            .mixin({
+                foo: function () {
+                    return this.bar;
+                }
+            })
+            .toClass());
+    });
+
+    it('silently ignores non-object mixins', function () {
+        testMixin(ryoc()
+            .mixin({
+                bar: 'baz'
+            })
+            .mixin({
+                foo: function () {
+                    return this.bar;
+                }
+            })
+            .mixin(1, function () {}, null)
+            .toClass());
+    });
+});
+
 describe('ryoc().method(name,m)', function () {
     it('throws TypeError when name is not a string', function () {
         assert.throws(function () {
@@ -195,38 +270,38 @@ describe('ryoc().method(name,m)', function () {
 });
 
 describe('ryoc.property(name,value,writable)', function () {
-    it("defines a property", function (){
-        var instance = new (ryoc()
-                            .property('a', 'base value of a')
-                            .toClass());
+    it("defines a property", function () {
+        var instance = new(ryoc()
+            .property('a', 'base value of a')
+            .toClass());
         assert(instance);
         assert.equal(instance.a, 'base value of a');
     });
-    it("which can be readonly", function (){
-        var instance = new (ryoc()
-                            .property('a', 'base value of a', true)
-                            .toClass());
+    it("which can be readonly", function () {
+        var instance = new(ryoc()
+            .property('a', 'base value of a', true)
+            .toClass());
         assert(instance);
         assert.equal(instance.a, 'base value of a');
         instance.a = 'some new value that will be ignored';
         assert.equal(instance.a, 'base value of a');
     });
-    it("defines a property with initial value for each new instance", function (){
+    it("defines a property with initial value for each new instance", function () {
         var klass = ryoc()
             .property('foo', 'base value')
-        .toClass();
-        
+            .toClass();
+
         var a = new klass;
         assert(a);
         // modify value in instance
         a.foo = 'overwritten';
         assert.equal(a.foo, 'overwritten');
-        
+
         // create new instance
         var b = new klass;
         assert.equal(b.foo, 'base value');
     });
-    
+
 });
 
 describe('ryoc.getter(name,m)', function () {
@@ -356,6 +431,5 @@ describe('ryoc.setter(name,m)', function () {
         assert.equal(instance.stored_a, 'a value');
         assert.equal(instance.stored_b, 'b value');
     });
-    
-});
 
+});

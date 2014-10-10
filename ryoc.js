@@ -15,10 +15,11 @@
 })(
     (function () {
         function throwIt(message) { throw new TypeError(message); }
+
         function assertName(n) {
             return (n && (typeof (n) === typeof (''))) ? n : throwIt('Expected a string');
         }
-
+        
         function assertFunction(fn) {
             return (fn && (fn instanceof Function)) ? fn : throwIt('Expected a function');
         }
@@ -34,6 +35,7 @@
         var Ryoc = function () {
             this.inherits = null;
             this.constructor = null;
+            this.mixins = [];
             this.methods = {};
             this.properties = {};
         };
@@ -44,6 +46,20 @@
         };
         proto.construct = function (constructor) {
             this.constructor = assertFunction(constructor);
+            return this;
+        };
+        proto.mixin = function (){
+            for (var i = 0; i < arguments.length; ++i){
+                var mixin = arguments[i];
+                if (mixin instanceof Array){
+                    for (var j = 0; j < mixin.length; ++j){
+                        this.mixin(mixin[j]);
+                    }
+                }
+                else if (mixin instanceof Object){
+                    this.mixins.push(mixin);
+                }
+            }
             return this;
         };
         proto.method = function (name, method) {
@@ -95,6 +111,14 @@
                 proto = Object.create(this.inherits instanceof Function ? this.inherits.prototype : this.inherits);
                 proto.constructor = Klass;
                 Klass.prototype = proto;
+            }
+            for (var i = 0; i < this.mixins.length; ++i){
+                var mixin = this.mixins[i];
+                var memberNames = Object.getOwnPropertyNames(mixin);
+                for (var j = 0; j < memberNames.length; ++j){
+                    var name = memberNames[j];
+                    proto[name] = mixin[name];
+                }
             }
             var methodNames = Object.getOwnPropertyNames(this.methods);
             for (var i = 0; i < methodNames.length; ++i) {
