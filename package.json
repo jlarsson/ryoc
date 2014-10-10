@@ -1,6 +1,6 @@
 {
     "name": "ryoc",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Joakim Larsson",
     "license": "MIT",
     "description": "Simple nonintrusive javascript prototypical inheritance through fluent api",
