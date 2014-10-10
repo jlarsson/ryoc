@@ -90,6 +90,6 @@ Circle(1).dump();
 ```
 
 ## What ryoc doesnt do
-- mimic class seamntics from other languages. In fact, the concept of classes in Javascript is quite meaningless.
+- mimic class semantics from other languages. In fact, the concept of classes in Javascript is quite meaningless.
 - constructors in base classes are not automatically applied - this will be your responsibility
 - introduce alien and weird meta stuff like _$super_. The only things in generated classes are what you explicitly put there.
