@@ -13,6 +13,7 @@ Works in node. No guarantees for other environments.
 var klass = require('ryoc')()
     .inherit([Object|Function])
     .construct([Function])
+    .mixin([Object|Array of Object, ...])
     .method([name],[Function])
     .property([name],[default value = undefined],[readonly = false])
     .getter([name],[Function])
