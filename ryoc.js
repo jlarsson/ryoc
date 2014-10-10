@@ -28,9 +28,7 @@
             return (obj && (obj instanceof Object)) ? obj : throwIt('Expected an object');
         }
 
-        function WrappedConstructorArgs(args) {
-            this.args = args;
-        }
+        var superDuperSecretMarker = {whoIsCalling: 'ryoc'};
 
         var Ryoc = function () {
             this.inherits = null;
@@ -98,10 +96,10 @@
             var self = this;
             var Klass = function () {
                 if (!(this instanceof Klass)) {
-                    return new Klass(new WrappedConstructorArgs(arguments));
+                    return new Klass(superDuperSecretMarker, arguments);
                 }
                 if (self.constructor) {
-                    var args = (arguments.length === 1) && (arguments[0] instanceof WrappedConstructorArgs) ? arguments[0].args : arguments;
+                    var args = (arguments.length === 2) && (arguments[0] === superDuperSecretMarker) ? arguments[1] : arguments;
                     self.constructor.apply(this, Array.prototype.slice.call(args, 0));
                 }
             };

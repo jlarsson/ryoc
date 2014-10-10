@@ -98,8 +98,22 @@ describe('ryoc classes', function () {
 });
 
 describe('ryoc constructors', function () {
-    it('are called', function () {
+    it('are called when using new', function () {
         var instance = new(ryoc()
+            .construct(function (a, b, c) {
+                this.constructorCalled = true;
+                assert(a, 1);
+                assert(b, 2);
+                assert(c, 3);
+            })
+            .getter('a', function () {
+                return this.getValueOfA();
+            })
+            .toClass())(1, 2, 3);
+        assert(instance.constructorCalled);
+    });
+    it('are called when not using new', function () {
+        var instance = (ryoc()
             .construct(function (a, b, c) {
                 this.constructorCalled = true;
                 assert(a, 1);
