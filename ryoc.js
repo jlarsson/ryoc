@@ -14,12 +14,14 @@
     }
 })(
     (function () {
-        function throwIt(message) { throw new TypeError(message); }
+        function throwIt(message) {
+            throw new TypeError(message);
+        }
 
         function assertName(n) {
             return (n && (typeof (n) === typeof (''))) ? n : throwIt('Expected a string');
         }
-        
+
         function assertFunction(fn) {
             return (fn && (fn instanceof Function)) ? fn : throwIt('Expected a function');
         }
@@ -28,7 +30,9 @@
             return (obj && (obj instanceof Object)) ? obj : throwIt('Expected an object');
         }
 
-        var superDuperSecretMarker = {whoIsCalling: 'ryoc'};
+        var superDuperSecretMarker = {
+            whoIsCalling: 'ryoc'
+        };
 
         var Ryoc = function () {
             this.inherits = null;
@@ -46,15 +50,14 @@
             this.constructor = assertFunction(constructor);
             return this;
         };
-        proto.mixin = function (){
-            for (var i = 0; i < arguments.length; ++i){
+        proto.mixin = function () {
+            for (var i = 0; i < arguments.length; ++i) {
                 var mixin = arguments[i];
-                if (mixin instanceof Array){
-                    for (var j = 0; j < mixin.length; ++j){
+                if (mixin instanceof Array) {
+                    for (var j = 0; j < mixin.length; ++j) {
                         this.mixin(mixin[j]);
                     }
-                }
-                else if (mixin instanceof Object){
+                } else if (mixin instanceof Object) {
                     this.mixins.push(mixin);
                 }
             }
@@ -63,6 +66,11 @@
         proto.method = function (name, method) {
             this.methods[assertName(name)] = assertFunction(method);
             return this;
+        };
+        proto.abstract = function (name) {
+            return this.method(name, function () {
+                throw new TypeError('[' + name + '] is abstract and must be overriden');
+            });
         };
         proto.property = function (name, value, readonly) {
             name = assertName(name);
@@ -110,10 +118,10 @@
                 proto.constructor = Klass;
                 Klass.prototype = proto;
             }
-            for (var i = 0; i < this.mixins.length; ++i){
+            for (var i = 0; i < this.mixins.length; ++i) {
                 var mixin = this.mixins[i];
                 var memberNames = Object.getOwnPropertyNames(mixin);
-                for (var j = 0; j < memberNames.length; ++j){
+                for (var j = 0; j < memberNames.length; ++j) {
                     var name = memberNames[j];
                     proto[name] = mixin[name];
                 }

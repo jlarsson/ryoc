@@ -15,6 +15,7 @@ var klass = require('ryoc')()
     .construct([Function])
     .mixin([Object|Array of Object, ...])
     .method([name],[Function])
+    .abstract([name])
     .property([name],[default value = undefined],[readonly = false])
     .getter([name],[Function])
     .setter([name],[Function])
@@ -23,6 +24,8 @@ var klass = require('ryoc')()
 var instance = new klass([constructor arguments]);
 var other = klass([constructor arguments]);
 ```
+
+```abstract(name)``` is a convenience method for ```method(name, function (){ throw new TypeError(...```.
 
 Order of application in ```toClass()```:
 

@@ -283,6 +283,25 @@ describe('ryoc().method(name,m)', function () {
     });
 });
 
+describe('ryoc.abstract(name)', function () {
+    it('declares a method with the given name', function () {
+        var instance = new(ryoc()
+            .abstract('foo')
+            .toClass());
+        assert(instance);
+        assert(instance.foo);
+        assert(instance.foo instanceof Function);
+    });
+    it('which will throw when called', function () {
+        var instance = new(ryoc()
+            .abstract('foo')
+            .toClass());
+        assert.throws(function () {
+            instance.foo();
+        }, TypeError);
+    });
+});
+
 describe('ryoc.property(name,value,writable)', function () {
     it("defines a property", function () {
         var instance = new(ryoc()
