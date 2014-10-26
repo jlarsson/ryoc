@@ -398,6 +398,19 @@ describe('ryoc.getter(name,m)', function () {
         assert.equal(instance.a, 'a value');
         assert.equal(instance.b, 'b value');
     });
+    it('can be defined in superclass', function () {
+        var baseClass = ryoc()
+            .getter('foo', function () {
+                return this.bar;
+            })
+            .toClass();
+        var subClass = ryoc()
+            .inherit(baseClass)
+            .toClass();
+        var instance = subClass();
+        instance.bar = 'baz';
+        assert.equal(instance.foo,'baz');
+    });
 });
 
 describe('ryoc.setter(name,m)', function () {
