@@ -1,3 +1,4 @@
+[![NPM](https://nodei.co/npm/ryoc.png?mini=true)](https://nodei.co/npm/ryoc/)
 [![Build Status](https://travis-ci.org/jlarsson/ryoc.svg?branch=master)](https://travis-ci.org/jlarsson/ryoc)
 
 # ryoc
